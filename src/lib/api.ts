@@ -58,10 +58,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 export const api = {
   auth: {
-    google: (credential: string) =>
+    google: (payload: { googleId: string; email: string; name: string; avatar?: string }) =>
       request<{ token: string; user: User }>('/auth/google', {
         method: 'POST',
-        body: JSON.stringify({ token: credential }),
+        body: JSON.stringify(payload),
       }),
     me: () => request<User>('/auth/me'),
   },

@@ -23,8 +23,15 @@ declare global {
   }
 }
 
+interface GooglePayload {
+  googleId: string;
+  email: string;
+  name: string;
+  avatar?: string;
+}
+
 interface Props {
-  onLogin: (credential: string) => void;
+  onLogin: (payload: GooglePayload) => void;
   error?: string | null;
 }
 
@@ -40,10 +47,13 @@ export default function LoginPage({ onLogin, error }: Props) {
     initialized.current = true;
     window.google.accounts.id.initialize({
       client_id: clientId,
-      callback: (res) => onLogin(res.credential),
+      callback: (res) => {
+        const payload = JSON.parse(atob(res.credential.split('.')[1]));
+        onLogin({ googleId: payload.sub, email: payload.email, name: payload.name, avatar: payload.picture });
+      },
     });
     window.google.accounts.id.renderButton(btnRef.current, {
-      theme: 'filled_black',
+      theme: 'outline',
       size: 'large',
       width: 280,
       text: 'signin_with',
@@ -64,20 +74,34 @@ export default function LoginPage({ onLogin, error }: Props) {
         onLoad={initGoogle}
       />
 
-      <div className={styles.card}>
-        <h1 className={styles.title}>Моменты</h1>
-        <p className={styles.subtitle}>Сохраняйте лучшие мгновения</p>
-
-        {error && <p className={styles.error}>{error}</p>}
-
-        <div className={styles.btnWrap} ref={btnRef} />
-
-        <p className={styles.hint}>
-          Войдите через Google, чтобы начать
-        </p>
+      {/* Left pink panel */}
+      <div className={styles.left}>
+        <div className={styles.shape} aria-hidden />
+        <h1 className={styles.bigTitle}>
+          МО<br />МЕН<br />ТЫ
+        </h1>
+        <span className={styles.tagline}>фотогалерея</span>
       </div>
 
-      <div className={styles.bg} aria-hidden />
+      {/* Right form panel */}
+      <div className={styles.right}>
+        <div className={styles.card}>
+          <div>
+            <h2 className={styles.cardTitle}>Войти</h2>
+            <p className={styles.cardSubtitle}>Сохраняйте лучшие мгновения</p>
+          </div>
+
+          <hr className={styles.divider} />
+
+          {error && <p className={styles.error}>{error}</p>}
+
+          <div className={styles.btnWrap} ref={btnRef} />
+
+          <p className={styles.hint}>
+            Авторизация через Google — быстро и безопасно
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -36,9 +36,9 @@ export default function Home() {
     }
   }, [loadAlbums]);
 
-  const handleLogin = async (credential: string) => {
+  const handleLogin = async (payload: { googleId: string; email: string; name: string; avatar?: string }) => {
     try {
-      const { token, user: me } = await api.auth.google(credential);
+      const { token, user: me } = await api.auth.google(payload);
       localStorage.setItem('momenty_token', token);
       localStorage.setItem('momenty_user', JSON.stringify(me));
       setUser(me);
@@ -83,7 +83,7 @@ export default function Home() {
   if (loading) {
     return (
       <div className={styles.splash}>
-        <span className={styles.splashTitle}>Моменты</span>
+        <span className={styles.splashTitle}>МОМЕНТЫ</span>
       </div>
     );
   }
@@ -95,17 +95,22 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.logo}>Моменты</h1>
+        <h1 className={styles.logo}>МОМЕНТЫ</h1>
         <div className={styles.headerRight}>
           {user.avatar && (
             <img src={user.avatar} alt={user.name} className={styles.avatar} />
           )}
           <span className={styles.userName}>{user.name}</span>
           <button className={styles.logoutBtn} onClick={handleLogout}>
-            выйти
+            Выйти
           </button>
         </div>
       </header>
+
+      <div className={styles.hero}>
+        <h2 className={styles.heroTitle}>Ваши{'\n'}моменты</h2>
+        <span className={styles.heroBadge}>фотогалерея</span>
+      </div>
 
       <main className={styles.main}>
         {error && (
@@ -117,7 +122,7 @@ export default function Home() {
 
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Без альбома</h2>
+            <h2 className={styles.sectionTitle}>Загрузить фото</h2>
           </div>
           <UploadZone onUploaded={loadAlbums} />
         </section>
@@ -129,7 +134,7 @@ export default function Home() {
               className={styles.newBtn}
               onClick={() => setShowNewAlbum((v) => !v)}
             >
-              {showNewAlbum ? 'отмена' : '+ новый'}
+              {showNewAlbum ? 'Отмена' : '+ Новый'}
             </button>
           </div>
 
@@ -147,13 +152,13 @@ export default function Home() {
                 type="submit"
                 disabled={creatingAlbum}
               >
-                {creatingAlbum ? '...' : 'создать'}
+                {creatingAlbum ? '...' : 'Создать'}
               </button>
             </form>
           )}
 
           {albums.length === 0 ? (
-            <p className={styles.empty}>нет альбомов</p>
+            <p className={styles.empty}>Нет альбомов — создайте первый</p>
           ) : (
             <div className={styles.albumsGrid}>
               {albums.map((album) => (
