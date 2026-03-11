@@ -37,8 +37,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(0,0,0,0.35);
 }
+
+.coverIcon {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  transition: transform 0.3s ease;
+}
+
+.card:hover .coverIcon { transform: scale(1.15) rotate(-5deg); }
 
 .body {
   display: flex;

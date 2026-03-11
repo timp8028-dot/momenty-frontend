@@ -6,15 +6,22 @@ import { Album } from '@/lib/api';
 import styles from './AlbumCard.module.css';
 
 const ACCENTS = [
-  { bg: '#2ECC71', label: 'green' },
-  { bg: '#2D6BE4', label: 'blue' },
-  { bg: '#FF5C5C', label: 'coral' },
-  { bg: '#FFD600', label: 'yellow' },
+  { bg: '#2ECC71' },
+  { bg: '#2D6BE4' },
+  { bg: '#FF5C5C' },
+  { bg: '#FFD600' },
 ];
+
+const ICONS = ['🌿', '🏖️', '🎉', '🌸', '🏔️', '🌙', '🎨', '🐾', '🍂', '✈️', '🎵', '🌊'];
 
 function getAccent(id: string) {
   const code = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
   return ACCENTS[code % ACCENTS.length];
+}
+
+function getIcon(id: string) {
+  const code = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return ICONS[code % ICONS.length];
 }
 
 interface Props {
@@ -26,6 +33,7 @@ export default function AlbumCard({ album, onDelete }: Props) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const accent = getAccent(album.id);
+  const icon = getIcon(album.id);
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -48,11 +56,7 @@ export default function AlbumCard({ album, onDelete }: Props) {
           <img src={album.cover_photo} alt={album.name} className={styles.coverImg} />
         ) : (
           <div className={styles.coverEmpty}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="8.5" cy="10.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M3 17l4.5-4.5 3 3 3-3 4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-            </svg>
+            <span className={styles.coverIcon}>{icon}</span>
           </div>
         )}
       </div>
