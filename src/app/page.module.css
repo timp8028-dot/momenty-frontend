@@ -171,21 +171,38 @@
   margin-bottom: 0.75rem;
 }
 
+.heroMarqueeWrap {
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.heroTitleScroll {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+}
+
 .heroTitle {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(4rem, 9vw, 7.5rem);
   font-weight: 900;
   font-style: italic;
   color: var(--white);
   line-height: 0.92;
   letter-spacing: -0.04em;
-  white-space: pre-line;
-  margin-bottom: 1.25rem;
+  padding-right: 4rem;
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .heroSub {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 17px;
   color: rgba(255,255,255,0.45);
 }
 

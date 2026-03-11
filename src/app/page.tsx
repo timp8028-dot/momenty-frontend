@@ -186,9 +186,15 @@ export default function Home() {
 
       <div className={styles.hero}>
         <p className={styles.heroMono}>фотогалерея</p>
-        <h1 className={styles.heroTitle}>
-          {tab === 'albums' ? 'Ваши\nальбомы' : 'Все\nфото'}
-        </h1>
+        <div className={styles.heroMarqueeWrap}>
+          <div className={styles.heroTitleScroll}>
+            {[...Array(6)].map((_, i) => (
+              <h1 key={i} className={styles.heroTitle}>
+                {tab === 'albums' ? 'Ваши альбомы' : 'Все фото'}
+              </h1>
+            ))}
+          </div>
+        </div>
         <p className={styles.heroSub}>
           {tab === 'albums'
             ? `${albums.length} альбом${albums.length === 1 ? '' : albums.length < 5 ? 'а' : 'ов'}`

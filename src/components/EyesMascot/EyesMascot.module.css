@@ -1,77 +1,91 @@
 .root {
   position: fixed;
-  bottom: 3.5rem;
+  bottom: 2rem;
   left: 1.5rem;
   z-index: 50;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   pointer-events: auto;
 }
 
 .face {
   display: flex;
-  gap: 10px;
+  gap: 7px;
   background: var(--white);
-  border: 2.5px solid var(--black);
+  border: 2px solid var(--black);
   border-radius: var(--radius-pill);
-  padding: 12px 18px;
-  box-shadow: 4px 4px 0 var(--black);
+  padding: 8px 14px;
+  box-shadow: 3px 3px 0 var(--black);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .face:hover {
-  transform: translate(-2px, -4px);
-  box-shadow: 6px 8px 0 var(--black);
+  transform: translate(-1px, -3px);
+  box-shadow: 4px 6px 0 var(--black);
 }
 
+/* Round cute eyes */
 .eye {
   position: relative;
-  width: 52px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background: var(--white);
   border-radius: 50%;
-  border: 2.5px solid var(--black);
+  border: 2px solid var(--black);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.15s ease;
 }
 
-.eye:hover { transform: scale(1.1); }
+.eye:hover { transform: scale(1.12); }
 
 .pupil {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background: var(--black);
   border-radius: 50%;
   transition: transform 0.07s ease-out;
 }
 
-/* cute second shine dot */
 .shine {
   position: absolute;
-  top: 3px;
-  left: 4px;
-  width: 6px;
-  height: 6px;
-  background: rgba(255,255,255,0.9);
+  top: 2px;
+  left: 3px;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.95);
   border-radius: 50%;
 }
 
 .shine::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  right: -3px;
+  bottom: -3px;
+  right: -2px;
   width: 3px;
   height: 3px;
   background: rgba(255,255,255,0.6);
   border-radius: 50%;
 }
+
+/* Blush */
+.eye::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  width: 8px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 160, 160, 0.35);
+}
+
+.eye:first-child::after { right: 2px; }
+.eye:last-child::after  { left: 2px; }
 
 .lid {
   position: absolute;
@@ -91,13 +105,11 @@
 }
 .lid { animation: blink 3.5s ease-in-out infinite; }
 
-/* Squint on hover */
 .squint .lid {
   transform: scaleY(0.65) !important;
   animation: none;
 }
 
-/* Sleepy */
 .sleepy .lid {
   transform: scaleY(0.5) !important;
   animation: none;
@@ -105,12 +117,12 @@
 
 .zzz {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-dim);
   animation: floatUp 2s ease-in-out infinite;
 }
 
 @keyframes floatUp {
   0%, 100% { opacity: 0.3; transform: translateY(0); }
-  50%       { opacity: 0.9; transform: translateY(-5px); }
+  50%       { opacity: 0.9; transform: translateY(-4px); }
 }

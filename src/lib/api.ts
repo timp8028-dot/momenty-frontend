@@ -80,8 +80,8 @@ export const api = {
   photos: {
     list: (albumId?: string) =>
       request<Photo[]>(`/photos${albumId ? `?albumId=${albumId}` : ''}`),
-    upload: (formData: FormData) =>
-      request<Photo>('/photos', { method: 'POST', body: formData }),
+    upload: (formData: FormData, albumId?: string) =>
+      request<Photo>(`/photos${albumId ? `?albumId=${albumId}` : ''}`, { method: 'POST', body: formData }),
     delete: (id: string) =>
       request<void>(`/photos/${id}`, { method: 'DELETE' }),
   },
