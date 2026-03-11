@@ -15,6 +15,15 @@ export default function Home() {
   const [creatingAlbum, setCreatingAlbum] = useState(false);
   const [showNewAlbum, setShowNewAlbum] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [tokenCopied, setTokenCopied] = useState(false);
+
+  const handleCopyToken = () => {
+    const token = localStorage.getItem('momenty_token');
+    if (!token) return;
+    navigator.clipboard.writeText(token);
+    setTokenCopied(true);
+    setTimeout(() => setTokenCopied(false), 2000);
+  };
 
   const loadAlbums = useCallback(async () => {
     try {
@@ -101,6 +110,9 @@ export default function Home() {
             <img src={user.avatar} alt={user.name} className={styles.avatar} />
           )}
           <span className={styles.userName}>{user.name}</span>
+          <button className={styles.tgBtn} onClick={handleCopyToken} title="Скопировать токен для Telegram бота">
+            {tokenCopied ? '✓ Скопировано' : 'Токен для бота'}
+          </button>
           <button className={styles.logoutBtn} onClick={handleLogout}>
             Выйти
           </button>

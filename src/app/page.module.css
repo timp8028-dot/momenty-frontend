@@ -3,18 +3,20 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background: var(--pink);
 }
 
 .splashTitle {
-  font-family: var(--font-serif);
-  font-size: 2.5rem;
-  color: var(--accent);
-  animation: pulse 1.4s ease-in-out infinite;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--black);
+  animation: pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  50% { opacity: 0.2; }
 }
 
 .page {
@@ -23,6 +25,7 @@
   flex-direction: column;
 }
 
+/* ── Header ── */
 .header {
   position: sticky;
   top: 0;
@@ -31,17 +34,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  height: 60px;
-  background: rgba(13, 13, 13, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  height: 64px;
+  background: var(--black);
+  border-bottom: var(--border);
 }
 
 .logo {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  color: var(--accent);
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--pink);
+  letter-spacing: -0.02em;
 }
 
 .headerRight {
@@ -51,117 +54,177 @@
 }
 
 .avatar {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid var(--border-accent);
+  border: 2px solid var(--pink);
 }
 
 .userName {
-  color: var(--text-muted);
+  color: #ccc;
   font-size: 13px;
+  font-family: var(--font-body);
+}
+
+.tgBtn {
+  color: var(--black);
+  font-size: 12px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  padding: 5px 14px;
+  border: 2px solid var(--pink);
+  border-radius: var(--radius-pill);
+  background: var(--pink);
+  transition: opacity 0.15s;
+}
+
+.tgBtn:hover {
+  opacity: 0.85;
 }
 
 .logoutBtn {
-  color: var(--text-dim);
+  color: #ccc;
   font-size: 12px;
-  font-family: var(--font-mono);
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: 500;
+  padding: 5px 14px;
+  border: 1px solid #444;
+  border-radius: var(--radius-pill);
   transition: color 0.15s, border-color 0.15s;
 }
 
 .logoutBtn:hover {
-  color: var(--danger);
-  border-color: var(--danger);
+  color: var(--pink);
+  border-color: var(--pink);
 }
 
+/* ── Hero ── */
+.hero {
+  background: var(--pink);
+  padding: 3rem 2rem 2.5rem;
+  border-bottom: var(--border);
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.heroBadge {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 6px 18px;
+  border: 2px solid var(--black);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--black);
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Main ── */
 .main {
   flex: 1;
-  max-width: 1200px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 3.5rem;
 }
 
 .error {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(192, 96, 96, 0.1);
-  border: 1px solid rgba(192, 96, 96, 0.3);
+  background: #fff0f0;
+  border: 2px solid var(--danger);
   color: var(--danger);
   padding: 0.75rem 1rem;
-  border-radius: var(--radius);
   font-size: 13px;
+  font-weight: 500;
 }
 
 .error button {
   color: var(--danger);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
-  padding: 0 4px;
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .sectionHeader {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
+  border-bottom: var(--border);
+  padding-bottom: 0.75rem;
 }
 
 .sectionTitle {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 900;
   color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  flex: 1;
 }
 
 .newBtn {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 12px;
-  color: var(--accent);
-  padding: 3px 10px;
-  border: 1px solid var(--accent-dim);
-  border-radius: var(--radius);
-  transition: background 0.15s;
+  font-weight: 700;
+  color: var(--black);
+  padding: 5px 16px;
+  border: 2px solid var(--black);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background 0.15s, color 0.15s;
 }
 
 .newBtn:hover {
-  background: var(--accent-dim);
+  background: var(--black);
+  color: var(--bg);
 }
 
 .newAlbumForm {
   display: flex;
-  gap: 0.5rem;
-  max-width: 380px;
+  gap: 0;
+  max-width: 420px;
 }
 
 .input {
   flex: 1;
   background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: 2px solid var(--black);
+  border-right: none;
   color: var(--text);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 14px;
   outline: none;
   transition: border-color 0.15s;
 }
 
 .input:focus {
-  border-color: var(--accent);
+  border-color: var(--pink);
+  border-right: none;
 }
 
 .input::placeholder {
@@ -169,22 +232,25 @@
 }
 
 .createBtn {
-  background: var(--accent);
-  color: #0d0d0d;
-  font-family: var(--font-mono);
+  background: var(--black);
+  color: var(--bg);
+  font-family: var(--font-body);
   font-size: 13px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: var(--radius);
+  font-weight: 700;
+  padding: 10px 20px;
+  border: 2px solid var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   transition: background 0.15s;
 }
 
 .createBtn:hover:not(:disabled) {
-  background: var(--accent-hover);
+  background: var(--pink);
+  border-color: var(--pink);
 }
 
 .createBtn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: default;
 }
 
@@ -195,6 +261,6 @@
 
 .albumsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
 }
