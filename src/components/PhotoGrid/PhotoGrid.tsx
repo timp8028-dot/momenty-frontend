@@ -66,7 +66,14 @@ export default function PhotoGrid({ photos, onDelete, featuredIds = [], onToggle
               className={`${styles.item} ${deletingId === photo.id ? styles.deleting : ''}`}
               onClick={() => { setLightbox(photo); setLightboxConfirm(false); }}
             >
-              <img src={photo.url} alt={photo.filename} className={styles.img} loading="lazy" />
+              <img
+                src={photo.url}
+                alt={photo.filename}
+                className={styles.img}
+                loading="lazy"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
+              <div className={styles.imgFallback}>📷</div>
 
               <div className={styles.overlay}>
                 <div className={styles.overlayActions} onClick={(e) => e.stopPropagation()}>
