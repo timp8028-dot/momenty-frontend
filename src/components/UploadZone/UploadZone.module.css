@@ -9,13 +9,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 2rem;
-  border: 1.5px dashed var(--border-accent);
+  gap: 0.75rem;
+  padding: 2.5rem 2rem;
+  border: 2px dashed var(--border-color);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-  min-height: 140px;
+  background: var(--bg-surface);
+  transition: border-color var(--transition), background var(--transition), transform var(--transition), box-shadow var(--transition);
+  min-height: 150px;
   text-align: center;
   outline: none;
 }
@@ -24,42 +25,45 @@
 .zone:focus-visible {
   border-color: var(--accent);
   background: var(--accent-dim);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .dragging {
   border-color: var(--accent);
   background: var(--accent-dim);
+  transform: scale(1.01);
+  box-shadow: var(--shadow-hover);
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 .icon {
   color: var(--text-dim);
-  transition: color 0.2s;
+  transition: color var(--transition), transform var(--transition);
 }
 
 .zone:hover .icon,
 .dragging .icon {
   color: var(--accent);
+  transform: translateY(-3px);
 }
 
 .label {
-  font-size: 13px;
-  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .hint {
   font-size: 11px;
+  font-weight: 500;
   color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.queue {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
+.queue { display: flex; flex-direction: column; gap: 0.75rem; }
 
 .queueHeader {
   display: flex;
@@ -69,43 +73,41 @@
 
 .queueTitle {
   font-size: 12px;
-  color: var(--text-dim);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .clearBtn {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
+  font-weight: 500;
   color: var(--text-dim);
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: color 0.15s;
+  padding: 3px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  transition: color var(--transition), border-color var(--transition);
 }
 
-.clearBtn:hover {
-  color: var(--text);
-}
+.clearBtn:hover { color: var(--text); border-color: var(--text-muted); }
 
-.thumbs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+.thumbs { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .thumb {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 76px;
+  height: 76px;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition);
 }
 
-.thumbImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.thumb:hover { transform: scale(1.05); }
+
+.thumbImg { width: 100%; height: 100%; object-fit: cover; }
 
 .thumbStatus {
   position: absolute;
@@ -117,22 +119,12 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
 }
 
-.uploading .thumbStatus {
-  color: var(--accent);
-}
-
-.done .thumbStatus {
-  background: rgba(80, 160, 100, 0.85);
-  color: #fff;
-}
-
-.error .thumbStatus {
-  background: rgba(192, 96, 96, 0.85);
-  color: #fff;
-}
+.done .thumbStatus { background: rgba(58, 158, 106, 0.9); color: #fff; }
+.error .thumbStatus { background: rgba(217, 79, 61, 0.9); color: #fff; }
 
 .thumbError {
   position: absolute;
@@ -140,9 +132,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(192, 96, 96, 0.7);
+  background: rgba(217, 79, 61, 0.65);
   color: #fff;
   font-size: 9px;
+  font-weight: 600;
   padding: 4px;
   text-align: center;
   line-height: 1.3;
@@ -152,12 +145,10 @@
   display: block;
   width: 12px;
   height: 12px;
-  border: 1.5px solid rgba(200, 169, 110, 0.3);
+  border: 2px solid rgba(232, 96, 58, 0.25);
   border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
