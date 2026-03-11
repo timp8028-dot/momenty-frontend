@@ -119,20 +119,20 @@ export default function LoginPage({ onLogin, error }: Props) {
 
         <div className={styles.polaroids}>
           <div className={`${styles.polaroid} ${styles.polaroid1}`}>
-            <img src="https://picsum.photos/seed/moments1/300/300" alt="" />
-            <span className={styles.polaroidLabel}>summer ☀️</span>
+            <img src="https://wqdqnxtcpmjfmcgjiqjz.supabase.co/storage/v1/object/public/photos/photo_2026-03-12_00-03-31.jpg" alt="" />
+            <span className={styles.polaroidLabel}>моменты ☀️</span>
           </div>
           <div className={`${styles.polaroid} ${styles.polaroid2}`}>
-            <img src="https://picsum.photos/seed/moments2/300/300" alt="" />
+            <img src="https://wqdqnxtcpmjfmcgjiqjz.supabase.co/storage/v1/object/public/photos/photo_2026-03-12_00-03-38.jpg" alt="" />
             <span className={styles.polaroidLabel}>memories 📸</span>
           </div>
           <div className={`${styles.polaroid} ${styles.polaroid3}`}>
-            <img src="https://picsum.photos/seed/moments3/300/300" alt="" />
-            <span className={styles.polaroidLabel}>good times ✨</span>
+            <img src="https://wqdqnxtcpmjfmcgjiqjz.supabase.co/storage/v1/object/public/photos/photo_2026-03-12_00-03-41.jpg" alt="" />
+            <span className={styles.polaroidLabel}>хорошие дни ✨</span>
           </div>
           <div className={`${styles.polaroid} ${styles.polaroid4}`}>
-            <img src="https://picsum.photos/seed/moments4/300/300" alt="" />
-            <span className={styles.polaroidLabel}>forever 💫</span>
+            <img src="https://wqdqnxtcpmjfmcgjiqjz.supabase.co/storage/v1/object/public/photos/photo_2026-03-12_00-03-45.jpg" alt="" />
+            <span className={styles.polaroidLabel}>навсегда 💫</span>
           </div>
         </div>
 
