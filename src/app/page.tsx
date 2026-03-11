@@ -184,24 +184,25 @@ export default function Home() {
         </div>
       </header>
 
-      <div className={styles.hero}>
-        <p className={styles.heroMono}>фотогалерея</p>
-        <div className={styles.heroMarqueeWrap}>
-          <div className={styles.heroTitleScroll}>
-            {[...Array(6)].map((_, i) => (
-              <h1 key={i} className={styles.heroTitle}>
-                {tab === 'albums' ? 'Ваши альбомы' : 'Все фото'}
-              </h1>
-            ))}
-          </div>
+      {photos.length > 0 ? (
+        <div className={styles.heroSlider}>
+          <HeroBanner photos={photos} albums={albums} />
         </div>
-        <p className={styles.heroSub}>
-          {tab === 'albums'
-            ? `${albums.length} альбом${albums.length === 1 ? '' : albums.length < 5 ? 'а' : 'ов'}`
-            : `${photos.length} фото`
-          }
-        </p>
-      </div>
+      ) : (
+        <div className={styles.hero}>
+          <p className={styles.heroMono}>фотогалерея</p>
+          <div className={styles.heroMarqueeWrap}>
+            <div className={styles.heroTitleScroll}>
+              {[...Array(6)].map((_, i) => (
+                <h1 key={i} className={styles.heroTitle}>
+                  {tab === 'albums' ? 'Ваши альбомы' : 'Все фото'}
+                </h1>
+              ))}
+            </div>
+          </div>
+          <p className={styles.heroSub}>загрузите первое фото</p>
+        </div>
+      )}
 
       <main className={styles.main}>
         {error && (
