@@ -15,7 +15,7 @@ function Eye({ mouseX, mouseY, sleeping }: { mouseX: number; mouseY: number; sle
     const cy = rect.top + rect.height / 2;
     const angle = Math.atan2(mouseY - cy, mouseX - cx);
     const dist = Math.hypot(mouseX - cx, mouseY - cy);
-    const maxOff = dist < 20 ? 0 : 7;
+    const maxOff = dist < 20 ? 0 : 9;
     setOffset({ x: Math.cos(angle) * maxOff, y: Math.sin(angle) * maxOff });
   }, [mouseX, mouseY, sleeping, hovered]);
 
