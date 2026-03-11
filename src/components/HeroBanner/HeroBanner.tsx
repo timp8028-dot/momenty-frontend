@@ -42,8 +42,11 @@ export default function HeroBanner({ photos, albums }: Props) {
 
   if (total === 0) return null;
 
-  const photo = photos[current];
-  const album = albums.find(a => a.id === photo.album_id);
+  const safeIndex = current >= total ? 0 : current;
+  const photo = photos[safeIndex];
+  const album = albums.find(a => a.id === photo?.album_id);
+
+  if (!photo) return null;
 
   return (
     <div className={styles.root} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
@@ -57,7 +60,7 @@ export default function HeroBanner({ photos, albums }: Props) {
 
       <div className={styles.caption}>
         {album && <span className={styles.albumTag}>{album.name}</span>}
-        <p className={styles.captionTitle}>{photo.filename.replace(/\.[^.]+$/, '')}</p>
+        <p className={styles.captionTitle}>{photo.filename?.replace(/\.[^.]+$/, '')}</p>
       </div>
 
       {total > 1 && (
