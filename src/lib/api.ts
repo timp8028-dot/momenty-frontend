@@ -79,7 +79,7 @@ export const api = {
 
   photos: {
     list: (albumId?: string) =>
-      request<Photo[]>(`/photos${albumId ? `?album_id=${albumId}` : ''}`),
+      request<Photo[]>(`/photos${albumId ? `?albumId=${albumId}` : ''}`),
     upload: (formData: FormData) =>
       request<Photo>('/photos', { method: 'POST', body: formData }),
     delete: (id: string) =>
