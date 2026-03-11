@@ -117,6 +117,25 @@ export default function LoginPage({ onLogin, error }: Props) {
         <div className={styles.shape3} />
         <div className={styles.shape4} />
 
+        <div className={styles.polaroids}>
+          <div className={`${styles.polaroid} ${styles.polaroid1}`}>
+            <img src="https://picsum.photos/seed/moments1/300/300" alt="" />
+            <span className={styles.polaroidLabel}>summer ☀️</span>
+          </div>
+          <div className={`${styles.polaroid} ${styles.polaroid2}`}>
+            <img src="https://picsum.photos/seed/moments2/300/300" alt="" />
+            <span className={styles.polaroidLabel}>memories 📸</span>
+          </div>
+          <div className={`${styles.polaroid} ${styles.polaroid3}`}>
+            <img src="https://picsum.photos/seed/moments3/300/300" alt="" />
+            <span className={styles.polaroidLabel}>good times ✨</span>
+          </div>
+          <div className={`${styles.polaroid} ${styles.polaroid4}`}>
+            <img src="https://picsum.photos/seed/moments4/300/300" alt="" />
+            <span className={styles.polaroidLabel}>forever 💫</span>
+          </div>
+        </div>
+
         <div className={styles.leftContent}>
           <p className={styles.leftMono}>фотогалерея</p>
           <h1 className={styles.leftTitle}>moments.</h1>

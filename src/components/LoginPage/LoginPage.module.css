@@ -258,6 +258,79 @@
   transition: color 0.3s;
 }
 
+/* ── Polaroid collage ── */
+.polaroids {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.polaroid {
+  position: absolute;
+  background: #fff;
+  padding: 8px 8px 32px 8px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+  width: 140px;
+}
+
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroidLabel {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #888;
+  margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.polaroid1 {
+  top: 12%;
+  left: 8%;
+  transform: rotate(-6deg);
+  animation: sway1 6s ease-in-out infinite;
+}
+
+.polaroid2 {
+  top: 20%;
+  right: 10%;
+  transform: rotate(4deg);
+  animation: sway2 7s ease-in-out infinite;
+}
+
+.polaroid3 {
+  bottom: 30%;
+  left: 12%;
+  transform: rotate(-3deg);
+  animation: sway1 8s ease-in-out infinite reverse;
+}
+
+.polaroid4 {
+  bottom: 18%;
+  right: 8%;
+  transform: rotate(6deg);
+  animation: sway2 5s ease-in-out infinite;
+}
+
+@keyframes sway1 {
+  0%, 100% { transform: rotate(-6deg) translateY(0); }
+  50%       { transform: rotate(-4deg) translateY(-8px); }
+}
+
+@keyframes sway2 {
+  0%, 100% { transform: rotate(4deg) translateY(0); }
+  50%       { transform: rotate(6deg) translateY(-6px); }
+}
+
 /* Mobile */
 @media (max-width: 640px) {
   .root { grid-template-columns: 1fr; }
