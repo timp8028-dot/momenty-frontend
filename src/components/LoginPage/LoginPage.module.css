@@ -269,9 +269,9 @@
 .polaroid {
   position: absolute;
   background: #fff;
-  padding: 8px 8px 32px 8px;
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
-  width: 140px;
+  padding: 10px 10px 40px 10px;
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+  width: 200px;
 }
 
 .polaroid img {
