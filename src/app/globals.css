@@ -1,44 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #F7F3EE;
-  --bg-surface: #FFFFFF;
-  --bg-raised: #EFE9DF;
-  --accent: #E8603A;
-  --accent-hover: #F07A56;
-  --accent-dim: rgba(232, 96, 58, 0.1);
-  --gold: #C9A96E;
-  --text: #1E1E1E;
-  --text-muted: #6A6A6A;
-  --text-dim: #B0A89A;
-  --danger: #D94F3D;
-  --success: #3A9E6A;
-  --border-color: #DDD5C8;
-  --border: 1px solid #DDD5C8;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
-  --shadow-hover: 0 8px 30px rgba(232, 96, 58, 0.18);
-  --radius: 10px;
-  --radius-lg: 18px;
-  --radius-pill: 100px;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Space Grotesk', sans-serif;
+  --cream:   #F5F0E8;
+  --black:   #1A1A1A;
+  --green:   #2ECC71;
+  --green-d: #27AE60;
+  --blue:    #2D6BE4;
+  --coral:   #FF5C5C;
+  --yellow:  #FFD600;
+  --white:   #FFFFFF;
+
+  --text:        #1A1A1A;
+  --text-muted:  #6B6B6B;
+  --text-dim:    #B0A89A;
+  --danger:      #FF5C5C;
+  --success:     #2ECC71;
+
+  --border-color: #E4DDD2;
+  --border:       1px solid #E4DDD2;
+
+  --shadow-sm:    0 1px 4px rgba(26,26,26,0.06);
+  --shadow:       0 4px 20px rgba(26,26,26,0.08);
+  --shadow-lg:    0 12px 48px rgba(26,26,26,0.12);
+  --shadow-green: 0 8px 28px rgba(46,204,113,0.3);
+  --shadow-blue:  0 8px 28px rgba(45,107,228,0.25);
+
+  --radius:     12px;
+  --radius-lg:  20px;
+  --radius-pill:100px;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
   --transition: 0.2s ease;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { color-scheme: light; }
 
 body {
-  background: var(--bg);
+  background: var(--cream);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 14px;
@@ -56,19 +59,17 @@ button {
   background: none;
 }
 
+button:active { transform: scale(0.97); transition: transform 0.15s ease-out; }
+
 img { display: block; max-width: 100%; }
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-track { background: var(--cream); }
 ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
 
 .sr-only {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border-width: 0;
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
 }

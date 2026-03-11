@@ -1,4 +1,4 @@
-.page { min-height: 100vh; display: flex; flex-direction: column; }
+.page { min-height: 100vh; display: flex; flex-direction: column; background: var(--cream); }
 
 .center {
   display: flex;
@@ -9,62 +9,67 @@
   min-height: 100vh;
 }
 
-.msg { color: var(--text-muted); font-size: 14px; }
+.msg { color: var(--text-muted); font-size: 14px; font-family: var(--font-mono); }
 
 .backLink {
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--black);
   padding: 6px 18px;
-  border: 1.5px solid var(--accent);
+  border: 2px solid var(--black);
   border-radius: var(--radius-pill);
-  transition: background var(--transition), color var(--transition);
+  box-shadow: 2px 2px 0 var(--black);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.backLink:hover { background: var(--accent); color: #fff; }
+.backLink:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--black);
+}
 
 .spinner {
   display: block;
   width: 30px;
   height: 30px;
   border: 3px solid var(--border-color);
-  border-top-color: var(--accent);
+  border-top-color: var(--green);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ── Header ── */
 .header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 40;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   padding: 0 2rem;
   height: 64px;
-  background: rgba(247, 243, 238, 0.9);
+  background: rgba(245, 240, 232, 0.88);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--black);
 }
 
 .back {
+  font-family: var(--font-mono);
+  font-size: 12px;
   color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 600;
   white-space: nowrap;
-  transition: color var(--transition);
+  transition: color 0.15s ease;
 }
 
-.back:hover { color: var(--accent); }
+.back:hover { color: var(--black); }
 
 .title {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
   font-style: italic;
-  color: var(--text);
+  color: var(--black);
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -72,22 +77,23 @@
 }
 
 .count {
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
   white-space: nowrap;
   padding: 4px 12px;
-  border: 1.5px solid var(--accent-dim);
+  border: 2px solid var(--black);
   border-radius: var(--radius-pill);
-  background: var(--accent-dim);
+  background: var(--yellow);
 }
 
+/* ── Main ── */
 .main {
   flex: 1;
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 2rem 5rem;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -97,20 +103,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(217, 79, 61, 0.06);
-  border: 1px solid rgba(217, 79, 61, 0.2);
-  color: var(--danger);
+  background: rgba(255, 92, 92, 0.07);
+  border: 2px solid var(--coral);
+  color: var(--coral);
   padding: 0.75rem 1rem;
   border-radius: var(--radius);
   font-size: 13px;
-  font-weight: 500;
+  font-family: var(--font-mono);
 }
 
-.error button { color: var(--danger); font-size: 18px; }
+.error button { color: var(--coral); font-size: 18px; }
 
 .uploadSection {
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 2.5rem;
 }
 
-.empty { color: var(--text-dim); font-size: 14px; font-style: italic; }
+.empty {
+  color: var(--text-dim);
+  font-size: 14px;
+  font-family: var(--font-mono);
+  font-style: italic;
+}

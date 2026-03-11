@@ -9,10 +9,7 @@ declare global {
     google: {
       accounts: {
         id: {
-          initialize: (config: {
-            client_id: string;
-            callback: (res: { credential: string }) => void;
-          }) => void;
+          initialize: (config: { client_id: string; callback: (res: { credential: string }) => void }) => void;
           renderButton: (el: HTMLElement, options: Record<string, unknown>) => void;
         };
       };
@@ -20,44 +17,41 @@ declare global {
   }
 }
 
-interface GooglePayload {
-  googleId: string;
-  email: string;
-  name: string;
-  avatar?: string;
-}
+interface GooglePayload { googleId: string; email: string; name: string; avatar?: string; }
+interface Props { onLogin: (payload: GooglePayload) => void; error?: string | null; }
 
-interface Props {
-  onLogin: (payload: GooglePayload) => void;
-  error?: string | null;
-}
-
-interface EyeOffset { x: number; y: number }
-
-function Eye({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
+function Eye({ mouseX, mouseY, sleeping }: { mouseX: number; mouseY: number; sleeping: boolean }) {
   const eyeRef = useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState<EyeOffset>({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
-    if (!eyeRef.current) return;
+    if (sleeping || hovered || !eyeRef.current) return;
     const rect = eyeRef.current.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const angle = Math.atan2(mouseY - cy, mouseX - cx);
-    const dist = Math.min(Math.hypot(mouseX - cx, mouseY - cy), 999);
-    const maxOffset = dist < 20 ? 0 : 7;
-    setOffset({
-      x: Math.cos(angle) * maxOffset,
-      y: Math.sin(angle) * maxOffset,
-    });
-  }, [mouseX, mouseY]);
+    const dist = Math.hypot(mouseX - cx, mouseY - cy);
+    const maxOff = dist < 30 ? 0 : 9;
+    setOffset({ x: Math.cos(angle) * maxOff, y: Math.sin(angle) * maxOff });
+  }, [mouseX, mouseY, sleeping, hovered]);
 
   return (
-    <div className={styles.eye} ref={eyeRef}>
-      <div
-        className={styles.pupil}
-        style={{ transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px))` }}
-      />
+    <div
+      ref={eyeRef}
+      className={`${styles.eye} ${sleeping ? styles.eyeSleepy : ''} ${hovered ? styles.eyeSquint : ''}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className={styles.eyeInner}>
+        <div
+          className={styles.pupil}
+          style={{ transform: `translate(calc(-50% + ${sleeping ? 0 : offset.x}px), calc(-50% + ${sleeping ? 4 : offset.y}px))` }}
+        >
+          <div className={styles.pupilShine} />
+        </div>
+      </div>
+      <div className={styles.eyelid} />
     </div>
   );
 }
@@ -66,21 +60,30 @@ export default function LoginPage({ onLogin, error }: Props) {
   const btnRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [sleeping, setSleeping] = useState(false);
   const [entered, setEntered] = useState(false);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMouse({ x: e.clientX, y: e.clientY });
+  const resetIdle = useCallback(() => {
+    setSleeping(false);
+    if (idleTimer.current) clearTimeout(idleTimer.current);
+    idleTimer.current = setTimeout(() => setSleeping(true), 5000);
   }, []);
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-    // Entry animation
-    const t = setTimeout(() => setEntered(true), 100);
+    const onMove = (e: MouseEvent) => {
+      setMouse({ x: e.clientX, y: e.clientY });
+      resetIdle();
+    };
+    window.addEventListener('mousemove', onMove);
+    resetIdle();
+    const t = setTimeout(() => setEntered(true), 80);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', onMove);
+      if (idleTimer.current) clearTimeout(idleTimer.current);
       clearTimeout(t);
     };
-  }, [handleMouseMove]);
+  }, [resetIdle]);
 
   function initGoogle() {
     if (initialized.current || !btnRef.current) return;
@@ -90,16 +93,12 @@ export default function LoginPage({ onLogin, error }: Props) {
     window.google.accounts.id.initialize({
       client_id: clientId,
       callback: (res) => {
-        const payload = JSON.parse(atob(res.credential.split('.')[1]));
-        onLogin({ googleId: payload.sub, email: payload.email, name: payload.name, avatar: payload.picture });
+        const p = JSON.parse(atob(res.credential.split('.')[1]));
+        onLogin({ googleId: p.sub, email: p.email, name: p.name, avatar: p.picture });
       },
     });
     window.google.accounts.id.renderButton(btnRef.current, {
-      theme: 'outline',
-      size: 'large',
-      width: 280,
-      text: 'signin_with',
-      locale: 'ru',
+      theme: 'outline', size: 'large', width: 280, text: 'signin_with', locale: 'ru',
     });
   }
 
@@ -111,31 +110,39 @@ export default function LoginPage({ onLogin, error }: Props) {
     <div className={styles.root}>
       <Script src="https://accounts.google.com/gsi/client" onLoad={initGoogle} />
 
-      {/* Floating blobs */}
-      <div className={styles.blob1} aria-hidden />
-      <div className={styles.blob2} aria-hidden />
+      {/* Left decorative panel */}
+      <div className={styles.left}>
+        <div className={styles.shape1} />
+        <div className={styles.shape2} />
+        <div className={styles.shape3} />
+        <div className={styles.shape4} />
 
-      <div className={`${styles.card} ${entered ? styles.cardVisible : ''}`}>
-        {/* Eyes mascot */}
-        <div className={styles.eyePair}>
-          <Eye mouseX={mouse.x} mouseY={mouse.y} />
-          <Eye mouseX={mouse.x} mouseY={mouse.y} />
+        <div className={styles.leftContent}>
+          <p className={styles.leftMono}>фотогалерея</p>
+          <h1 className={styles.leftTitle}>moments.</h1>
+          <p className={styles.leftSub}>твои фото.<br />твои воспоминания.</p>
         </div>
+      </div>
 
-        <div className={styles.titleWrap}>
-          <h1 className={styles.title}>Моменты</h1>
-          <p className={styles.subtitle}>Сохраняйте лучшие мгновения</p>
+      {/* Right form panel */}
+      <div className={styles.right}>
+        <div className={`${styles.card} ${entered ? styles.cardIn : ''}`}>
+          <div className={styles.eyePair}>
+            <Eye mouseX={mouse.x} mouseY={mouse.y} sleeping={sleeping} />
+            <Eye mouseX={mouse.x} mouseY={mouse.y} sleeping={sleeping} />
+          </div>
+
+          <h2 className={styles.title}>Добро пожаловать</h2>
+          <p className={styles.subtitle}>Войдите, чтобы увидеть свои моменты</p>
+
+          {error && <div className={styles.error}>{error}</div>}
+
+          <div className={styles.btnWrap} ref={btnRef} />
+
+          <p className={styles.hint}>
+            {sleeping ? '😴 задремал...' : 'Безопасный вход через Google'}
+          </p>
         </div>
-
-        <div className={styles.divider}>
-          <span>войти через</span>
-        </div>
-
-        {error && <p className={styles.error}>{error}</p>}
-
-        <div className={styles.btnWrap} ref={btnRef} />
-
-        <p className={styles.hint}>Безопасный вход через Google</p>
       </div>
     </div>
   );
