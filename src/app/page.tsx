@@ -7,6 +7,7 @@ import AlbumCard from '@/components/AlbumCard/AlbumCard';
 import UploadZone from '@/components/UploadZone/UploadZone';
 import PhotoGrid from '@/components/PhotoGrid/PhotoGrid';
 import EyesMascot from '@/components/EyesMascot/EyesMascot';
+import HeroBanner from '@/components/HeroBanner/HeroBanner';
 import styles from './page.module.css';
 
 type Tab = 'albums' | 'photos';
@@ -23,6 +24,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [tokenCopied, setTokenCopied] = useState(false);
+  const [featuredIds, setFeaturedIds] = useState<string[]>([]);
 
   const handleCopyToken = () => {
     const token = localStorage.getItem('momenty_token');
@@ -51,6 +53,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const saved = localStorage.getItem('momenty_featured');
+    if (saved) setFeaturedIds(JSON.parse(saved));
+
     const token = localStorage.getItem('momenty_token');
     const savedUser = localStorage.getItem('momenty_user');
     if (token && savedUser) {
@@ -60,6 +65,14 @@ export default function Home() {
       setLoading(false);
     }
   }, [loadAlbums, loadPhotos]);
+
+  const handleToggleFeatured = (id: string) => {
+    setFeaturedIds(prev => {
+      const next = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+      localStorage.setItem('momenty_featured', JSON.stringify(next));
+      return next;
+    });
+  };
 
   const handleLogin = async (payload: { googleId: string; email: string; name: string; avatar?: string }) => {
     try {
@@ -120,6 +133,8 @@ export default function Home() {
     loadAlbums();
     loadPhotos();
   };
+
+  const featuredPhotos = photos.filter(p => featuredIds.includes(p.id));
 
   if (loading) {
     return (
@@ -190,6 +205,12 @@ export default function Home() {
           </div>
         )}
 
+        {featuredPhotos.length > 0 && (
+          <section className={styles.bannerSection}>
+            <HeroBanner photos={featuredPhotos} albums={albums} />
+          </section>
+        )}
+
         <section className={styles.uploadSection}>
           <UploadZone onUploaded={handleUploaded} />
         </section>
@@ -237,11 +258,19 @@ export default function Home() {
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Все фото</h2>
+              {featuredIds.length > 0 && (
+                <span className={styles.featuredHint}>⭐ {featuredIds.length} в баннере</span>
+              )}
             </div>
             {photos.length === 0 ? (
               <p className={styles.empty}>Нет фото — загрузите первое</p>
             ) : (
-              <PhotoGrid photos={photos} onDelete={handleDeletePhoto} />
+              <PhotoGrid
+                photos={photos}
+                onDelete={handleDeletePhoto}
+                featuredIds={featuredIds}
+                onToggleFeatured={handleToggleFeatured}
+              />
             )}
           </section>
         )}

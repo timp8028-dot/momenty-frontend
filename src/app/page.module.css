@@ -314,6 +314,19 @@
   gap: 1.25rem;
 }
 
+.bannerSection {
+  /* no extra margin needed, gap handles it */
+}
+
+.featuredHint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 4px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-pill);
+}
+
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .header { padding: 0 1rem; gap: 1rem; }
