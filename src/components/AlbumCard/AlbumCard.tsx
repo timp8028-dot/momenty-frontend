@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Album } from '@/lib/api';
+import AppIcon, { getAlbumIcon } from '../AppIcon/AppIcon';
 import styles from './AlbumCard.module.css';
 
 const ACCENTS = [
@@ -12,16 +13,9 @@ const ACCENTS = [
   { bg: '#FFD600' },
 ];
 
-const ICONS = ['🌿', '🏖️', '🎉', '🌸', '🏔️', '🌙', '🎨', '🐾', '🍂', '✈️', '🎵', '🌊'];
-
 function getAccent(id: string) {
   const code = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
   return ACCENTS[code % ACCENTS.length];
-}
-
-function getIcon(id: string) {
-  const code = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  return ICONS[code % ICONS.length];
 }
 
 interface Props {
@@ -33,7 +27,7 @@ export default function AlbumCard({ album, onDelete }: Props) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const accent = getAccent(album.id);
-  const icon = getIcon(album.id);
+  const iconType = getAlbumIcon(album.id);
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,7 +50,7 @@ export default function AlbumCard({ album, onDelete }: Props) {
           <img src={album.cover_photo} alt={album.name} className={styles.coverImg} />
         ) : (
           <div className={styles.coverEmpty}>
-            <span className={styles.coverIcon}>{icon}</span>
+            <AppIcon type={iconType} size={72} />
           </div>
         )}
       </div>

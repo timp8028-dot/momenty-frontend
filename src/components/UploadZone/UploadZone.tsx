@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import { api } from '@/lib/api';
+import AppIcon from '../AppIcon/AppIcon';
 import styles from './UploadZone.module.css';
 
 interface Props {
@@ -105,10 +106,7 @@ export default function UploadZone({ albumId, onUploaded }: Props) {
           className={styles.hidden}
           onChange={(e) => e.target.files && addFiles(e.target.files)}
         />
-        <svg className={styles.icon} width="32" height="32" viewBox="0 0 24 24" fill="none">
-          <path d="M12 16V8m0 0-3 3m3-3 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M3 15v2a4 4 0 004 4h10a4 4 0 004-4v-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
+        <AppIcon type="upload" size={56} />
         <p className={styles.label}>
           {dragging ? 'Отпустите файлы' : 'Перетащите фото или нажмите для выбора'}
         </p>

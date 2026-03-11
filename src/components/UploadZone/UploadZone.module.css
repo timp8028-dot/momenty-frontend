@@ -38,16 +38,6 @@
 
 .hidden { display: none; }
 
-.icon {
-  color: var(--text-dim);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.zone:hover .icon,
-.dragging .icon {
-  color: var(--green);
-  transform: translateY(-4px);
-}
 
 .label {
   font-family: var(--font-body);
