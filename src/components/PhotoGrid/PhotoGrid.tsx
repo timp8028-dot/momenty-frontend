@@ -26,18 +26,24 @@ export default function PhotoGrid({ photos, onDelete, featuredIds = [], onToggle
     }
     setDeletingId(photo.id);
     setConfirmId(null);
-    await onDelete(photo.id);
-    setDeletingId(null);
+    try {
+      await onDelete(photo.id);
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   const handleLightboxDelete = async () => {
     if (!lightbox) return;
     if (!lightboxConfirm) { setLightboxConfirm(true); return; }
     setLightboxDeleting(true);
-    await onDelete(lightbox.id);
-    setLightboxDeleting(false);
-    setLightboxConfirm(false);
-    setLightbox(null);
+    try {
+      await onDelete(lightbox.id);
+      setLightbox(null);
+    } finally {
+      setLightboxDeleting(false);
+      setLightboxConfirm(false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

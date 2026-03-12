@@ -186,7 +186,7 @@ export default function Home() {
 
       {photos.length > 0 ? (
         <div className={styles.heroSlider}>
-          <HeroBanner photos={photos} albums={albums} />
+          <HeroBanner photos={featuredPhotos.length > 0 ? featuredPhotos : photos} albums={albums} />
         </div>
       ) : (
         <div className={styles.hero}>
@@ -210,12 +210,6 @@ export default function Home() {
             <span>{error}</span>
             <button onClick={() => setError(null)}>×</button>
           </div>
-        )}
-
-        {featuredPhotos.length > 0 && (
-          <section className={styles.bannerSection}>
-            <HeroBanner photos={featuredPhotos} albums={albums} />
-          </section>
         )}
 
         <section className={styles.uploadSection}>
@@ -265,9 +259,9 @@ export default function Home() {
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Все фото</h2>
-              {featuredIds.length > 0 && (
-                <span className={styles.featuredHint}>⭐ {featuredIds.length} в баннере</span>
-              )}
+              <span className={styles.featuredHint}>
+                {featuredIds.length > 0 ? `⭐ ${featuredIds.length} в баннере` : '⭐ — добавить в баннер'}
+              </span>
             </div>
             {photos.length === 0 ? (
               <p className={styles.empty}>Нет фото — загрузите первое</p>

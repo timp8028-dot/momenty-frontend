@@ -16,6 +16,7 @@ export default function HeroBanner({ photos, albums }: Props) {
   const total = photos.length;
 
   const goTo = useCallback((idx: number) => {
+    if (total === 0) return;
     setCurrent((idx + total) % total);
   }, [total]);
 
@@ -31,6 +32,13 @@ export default function HeroBanner({ photos, albums }: Props) {
     resetTimer();
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [resetTimer]);
+
+  // Reset current index when photos array shrinks
+  useEffect(() => {
+    if (total > 0 && current >= total) {
+      setCurrent(0);
+    }
+  }, [total, current]);
 
   const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -51,7 +59,7 @@ export default function HeroBanner({ photos, albums }: Props) {
   return (
     <div className={styles.root} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       {photos.map((p, i) => (
-        <div key={p.id} className={`${styles.slide} ${i === current ? styles.active : ''}`} aria-hidden={i !== current}>
+        <div key={p.id} className={`${styles.slide} ${i === safeIndex ? styles.active : ''}`} aria-hidden={i !== safeIndex}>
           <img src={p.url} alt={p.filename} className={styles.img} />
         </div>
       ))}
@@ -71,7 +79,7 @@ export default function HeroBanner({ photos, albums }: Props) {
             {photos.map((_, i) => (
               <button
                 key={i}
-                className={`${styles.dot} ${i === current ? styles.dotActive : ''}`}
+                className={`${styles.dot} ${i === safeIndex ? styles.dotActive : ''}`}
                 onClick={() => { goTo(i); resetTimer(); }}
                 aria-label={`Фото ${i + 1}`}
               />
